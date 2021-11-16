@@ -3,7 +3,6 @@ Create tasks in Asana from pull requests in all repositories associated with a G
 
 ## Dependencies
 - Python 3 (tested on 3.9)
-- [requests](https://pypi.org/project/requests/)
 - [asana](https://pypi.org/project/asana/)
 - [PyGithub](https://pypi.org/project/PyGithub/)
 
