@@ -23,7 +23,7 @@ def main(event=None, context=None):
     asana_client.headers = {'asana-enable': 'new_user_task_lists'}
     repo_list = gh_client.get_organization(ORG_NAME).get_repos()
     for repo in repo_list:
-        open_prs = dependabot_prs(repo)
+        open_prs = dependency_prs(repo)
         if open_prs:
             task = asana_client.tasks.create_task(task_data(repo, open_prs))
             for subtask_name in [
@@ -40,10 +40,12 @@ def main(event=None, context=None):
     return task_count
 
 
-def dependabot_prs(repo):
-    """Returns all repository PRs created by Dependabot."""
+def dependency_prs(repo):
+    """Returns all repository PRs for dependencies."""
     prs = repo.get_pulls(state="open")
-    return [u for u in prs if "dependabot" in u.user.login]
+    dependabot_prs = [u for u in prs if "dependabot" in u.user.login]
+    dependency_update_prs = [u for u in prs if u.ref == "dependency-updates"]
+    return list(set(dependabot_prs + dependency_update_prs))
 
 
 def has_security_pr(pull_requests):
