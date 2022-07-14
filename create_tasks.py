@@ -20,7 +20,8 @@ def main(event=None, context=None):
     gh_client = Github(environ.get("GITHUB_ACCESS_TOKEN"))
     asana_client = Client.access_token(environ.get("ASANA_ACCESS_TOKEN"))
     # opt-in to deprecation
-    asana_client.headers = {'asana-enable': 'new_user_task_lists'}
+    asana_client.headers = {
+        'asana-enable': 'new_user_task_lists,new_project_templates'}
     repo_list = gh_client.get_organization(ORG_NAME).get_repos()
     for repo in repo_list:
         open_prs = dependency_prs(repo)
@@ -44,7 +45,8 @@ def dependency_prs(repo):
     """Returns all repository PRs for dependencies."""
     prs = repo.get_pulls(state="open")
     dependabot_prs = [u for u in prs if "dependabot" in u.user.login]
-    dependency_update_prs = [u for u in prs if u.ref == "dependency-updates"]
+    dependency_update_prs = [
+        u for u in prs if u.head.ref == "dependency-updates"]
     return list(set(dependabot_prs + dependency_update_prs))
 
 
