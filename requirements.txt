@@ -1,2 +1,2 @@
-asana==0.10.3
-PyGithub==1.55
+asana~=1.0.0
+PyGithub~=1.55
