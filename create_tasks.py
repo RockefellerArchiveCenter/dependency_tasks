@@ -28,7 +28,6 @@ def main(event=None, context=None):
         if open_prs:
             task = asana_client.tasks.create_task(task_data(repo, open_prs))
             for subtask_name in [
-                    "check in updates to development branch",
                     "deploy development branch with updates",
                     "deploy production branch with updates"]:
                 asana_client.tasks.create_task(
