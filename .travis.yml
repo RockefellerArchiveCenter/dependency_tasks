@@ -15,12 +15,6 @@ install:
 script:
   - tox
   - docker build -t ${DOCKER_REPO} .
-matrix:
-  include:
-    - python: "3.6"
-      env: TOXENV=py36
-    - python: "3.6"
-      env: TOXENV=linting
 deploy:
   provider: script
   script: bash scripts/docker_push.sh
