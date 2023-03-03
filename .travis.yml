@@ -15,9 +15,12 @@ install:
 script:
   - tox
   - docker build -t ${DOCKER_REPO} .
+before_deploy:
+  - if [ ! -d deploy_scripts ]; then git clone https://github.com/RockefellerArchiveCenter/deploy_scripts.git; fi
+  - bash deploy_scripts/containers/push_image_to_ecr.sh
 deploy:
   provider: script
-  script: bash scripts/docker_push.sh
+  script: bash deploy_scripts/containers/deploy_image_lambda.sh
   on:
     branch: base
 notifications:
