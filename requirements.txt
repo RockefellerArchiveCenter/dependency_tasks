@@ -20,7 +20,7 @@ oauthlib==3.2.2
     # via requests-oauthlib
 pycparser==2.21
     # via cffi
-pygithub==1.58.0
+pygithub==1.55
     # via -r requirements.in
 pyjwt==2.6.0
     # via pygithub
