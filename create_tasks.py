@@ -2,23 +2,36 @@
 
 """Create Asana tasks for every application which has open Dependabot PRs.
 
-Requires GITHUB_ACCESS_TOKEN and ASANA_ACCESS_TOKEN environment variables to be set.
+Requires encrypted GITHUB_ACCESS_TOKEN and ASANA_ACCESS_TOKEN environment variables to be set.
 """
 
+from base64 import b64decode
 from os import environ
 
+import boto3
 from asana import Client
 from github import Github
 
-ORG_NAME = environ.get("ORG_NAME")
-PROJECT_ID = environ.get("PROJECT_ID")
-SECTION_ID = environ.get("SECTION_ID")
+
+def decrypt_env_variable(env_key):
+    encrypted = environ.get(env_key)
+    return boto3.client('kms').decrypt(
+        CiphertextBlob=b64decode(encrypted),
+        EncryptionContext={
+            'LambdaFunctionName': environ['AWS_LAMBDA_FUNCTION_NAME']}
+    )['Plaintext'].decode('utf-8')
+
+
+ORG_NAME = decrypt_env_variable("ORG_NAME")
+PROJECT_ID = decrypt_env_variable("PROJECT_ID")
+SECTION_ID = decrypt_env_variable("SECTION_ID")
 
 
 def main(event=None, context=None):
     task_count = 0
-    gh_client = Github(environ.get("GITHUB_ACCESS_TOKEN"))
-    asana_client = Client.access_token(environ.get("ASANA_ACCESS_TOKEN"))
+    gh_client = Github(decrypt_env_variable("GITHUB_ACCESS_TOKEN"))
+    asana_client = Client.access_token(
+        decrypt_env_variable("ASANA_ACCESS_TOKEN"))
     # opt-in to deprecation
     asana_client.headers = {
         'asana-enable': 'new_user_task_lists,new_project_templates'}
