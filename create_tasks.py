@@ -74,7 +74,7 @@ def task_data(repo, pull_requests):
         "custom_fields": {
             "1200689146072910": "1200689146072911"
         },
-        "name": "{} ({} {})".format(repo.name, len(pull_requests), "update" if len(pull_requests) == 1 else "updates"),
+        "name": repo.name,
         "notes": "\n".join([pr.title for pr in pull_requests]),
         "projects": [PROJECT_ID],
         "memberships": [
