@@ -8,13 +8,13 @@ asana==1.0.0
     # via -r requirements.in
 certifi==2023.7.22
     # via requests
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   cryptography
     #   pynacl
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via requests
-cryptography==41.0.3
+cryptography==41.0.4
     # via pyjwt
 deprecated==1.2.14
     # via pygithub
