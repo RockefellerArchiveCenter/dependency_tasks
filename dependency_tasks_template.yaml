@@ -142,20 +142,39 @@ Resources:
         - Key: Application
           Value: !Ref ApplicationName
 
-  DigitizationTasksTravisEcRPermission:
+  DependencyTasksEventRule:
+    Type: AWS::Events::Rule
+    Properties:
+      Description: "Runs on the first Monday of each month"
+      Name: first_monday
+      ScheduleExpression: "cron(0 2 ? * 2#1 *)"
+      State: "ENABLED"
+      Targets: 
+        - Arn: !GetAtt DependencyTasksFunction.Arn
+          Id: "DependencyTasks"
+
+  DependencyTasksEventRulePermission: 
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DependencyTasksFunction
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt DependencyTasksEventRule.Arn
+
+  DependencyTasksTravisEcRPermission:
     Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !Ref DependencyTasksFunction
       Action: "lambda:UpdateFunctionCode"
       Principal: "arn:aws:iam::817658541382:user/TravisECR"
 
-  DigitizationTasksLogGroup:
+  DependencyTasksLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub "/aws/lambda/${DependencyTasksFunction}"
       RetentionInDays: 90
 
 Outputs:
-  DigitizedAvTriggerFunction:
+  DependencyTasksFunction:
     Description: "Dependency Tasks Lambda Function ARN"
     Value: !GetAtt DependencyTasksFunction.Arn
