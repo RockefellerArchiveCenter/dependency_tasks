@@ -118,9 +118,9 @@ def test_main(mock_dependency_prs, mock_asana_tasks,
     github_access_token = "1234abcdefg"
     asana_access_token = "98765fedcba"
     mock_get_config.return_value = {
-        'ORG_NAME': org_name,
-        'PROJECT_ID': project_id,
-        'SECTION_ID': section_id,
+        'GITHUB_ORG_NAME': org_name,
+        'ASANA_PROJECT_ID': project_id,
+        'ASANA_SECTION_ID': section_id,
         'GITHUB_ACCESS_TOKEN': github_access_token,
         'ASANA_ACCESS_TOKEN': asana_access_token
     }

@@ -74,12 +74,13 @@ def main(event=None, context=None):
     auth = Auth.Token(config.get("GITHUB_ACCESS_TOKEN"))
     gh_client = Github(auth=auth)
     asana_client = AsanaClient(config.get("ASANA_ACCESS_TOKEN"))
-    repo_list = gh_client.get_organization(config.get("ORG_NAME")).get_repos()
+    repo_list = gh_client.get_organization(
+        config.get("GITHUB_ORG_NAME")).get_repos()
     for repo in repo_list:
         open_prs = dependency_prs(repo)
         if open_prs:
             task = asana_client.tasks.create_task(
-                task_data(repo, open_prs, config.get("PROJECT_ID"), config.get("SECTION_ID")), {})
+                task_data(repo, open_prs, config.get("ASANA_PROJECT_ID"), config.get("ASANA_SECTION_ID")), {})
             for subtask_name in [
                     "deploy development branch with updates",
                     "deploy production branch with updates"]:

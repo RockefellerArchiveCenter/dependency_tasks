@@ -1,0 +1,161 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  digitization-tasks
+
+  Creates Asana tasks for new GitHub dependency pull requests.
+
+Parameters:
+  ApplicationEnvironment:
+    Type: String
+    Description: Environment in which the application should be deployed.
+    AllowedValues:
+      - dev
+      - prod
+  ApplicationName:
+    Type: String
+    Description: Name of the application to be deployed.
+    Default: dependency_tasks
+  AsanaAccessToken:
+    Type: String
+    Description: Access token for Asana.
+  GithubAccessToken:
+    Type: String
+    Description: Access token for Github.
+
+Mappings:
+  Asana:
+    ProjectId:
+      dev: 1206971441441570
+      prod: 1206971441441570
+    SectionId:
+      dev: 1206971441441575
+      prod: 1206971441441575
+  Github:
+    OrgName:
+      dev: "RockefellerArchiveCenter"
+      prod: "RockefellerArchiveCenter"
+
+Resources:
+  DigitizationTasksFunctionRole:
+    Type: AWS::IAM::Role
+    Properties: 
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Description: !Sub 'Allows ${ApplicationName} lambda to be executed successfully.'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      Policies:
+        - PolicyName: DependencyTasksParameterStorePolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: 
+                  - 'ssm:GetParametersByPath*'
+                  - 'ssm:PutParameter'
+                Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ApplicationEnvironment}/${ApplicationName}*'
+
+  AsanaAccessTokenParam:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Token for Asana client.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_ACCESS_TOKEN
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !Ref AsanaAccessToken
+
+  AsanaProjectIdParam:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Asana project ID in which new tasks should be created.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_PROJECT_ID
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !FindInMap [Asana, ProjectId, !Ref ApplicationEnvironment]
+
+  AsanaSectionIdParam:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Asana section ID under which new tasks should be created.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_SECTION_ID
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !FindInMap [Asana, SectionId, !Ref ApplicationEnvironment]
+
+  GithubAccessTokenParam:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Token for Github client.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_ACCESS_TOKEN
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !Ref AsanaAccessToken
+
+  GithubOrgNameParam:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Organization name for Github organizational account.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_ORG_NAME
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !FindInMap [Asana, SectionId, !Ref ApplicationEnvironment]
+
+  DependencyTasksFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket: !Sub 'rac-${ApplicationEnvironment}-lambda'
+        S3Key: !Sub '${ApplicationName}.zip'
+      FunctionName: !Ref ApplicationName
+      Handler: create_dependency_tasks.main
+      Role: !GetAtt DependencyTasksFunctionRole.Arn
+      Runtime: python3.11
+      Timeout: 270
+      Environment:
+        Variables:
+          ENV:
+            Ref: ApplicationEnvironment
+          APP_CONFIG_PATH:
+            Ref: ApplicationName
+      Architectures:
+        - x86_64
+      Tags: 
+        - Key: Environment
+          Value: !Ref ApplicationEnvironment
+        - Key: Application
+          Value: !Ref ApplicationName
+
+  DigitizationTasksTravisEcRPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref DependencyTasksFunction
+      Action: "lambda:UpdateFunctionCode"
+      Principal: "arn:aws:iam::817658541382:user/TravisECR"
+
+  DigitizationTasksLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${DependencyTasksFunction}"
+      RetentionInDays: 90
+
+Outputs:
+  DigitizedAvTriggerFunction:
+    Description: "Dependency Tasks Lambda Function ARN"
+    Value: !GetAtt DependencyTasksFunction.Arn
