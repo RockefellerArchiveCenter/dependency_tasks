@@ -143,7 +143,7 @@ Resources:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !FindInMap [Asana, SectionId, !Ref ApplicationEnvironment]
+      Value: !FindInMap [Github, OrgName, !Ref ApplicationEnvironment]
 
   DependencyTasksFunction:
     Type: AWS::Lambda::Function
