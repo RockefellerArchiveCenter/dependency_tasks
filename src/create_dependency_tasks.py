@@ -12,17 +12,6 @@ import asana
 import boto3
 from github import Auth, Github
 
-# PARAMS
-# ORG_NAME = decrypt_env_variable("ORG_NAME")
-# PROJECT_ID = decrypt_env_variable("PROJECT_ID")
-# SECTION_ID = decrypt_env_variable("SECTION_ID")
-# GITHUB_ACCESS_TOKEN
-# ASANA_ACCESS_TOKEN
-
-# Env varaibles
-# ENV
-# APP_CONFIG_PATH
-
 
 def get_config(ssm_parameter_path):
     """Fetch config values from Parameter Store.
@@ -71,7 +60,9 @@ def main(event=None, context=None):
     task_count = 0
     full_config_path = f"/{environ.get('ENV')}/{environ.get('APP_CONFIG_PATH')}"
     config = get_config(full_config_path)
-    auth = Auth.Token(config.get("GITHUB_ACCESS_TOKEN"))
+    auth = Auth.AppAuth(
+        config.get("GITHUB_APP_ID"),
+        config.get("GITHUB_APP_PRIVATE_KEY")).get_installation_auth(config.get("GITHUB_APP_INSTALLATION_ID"))
     gh_client = Github(auth=auth)
     asana_client = AsanaClient(config.get("ASANA_ACCESS_TOKEN"))
     repo_list = gh_client.get_organization(

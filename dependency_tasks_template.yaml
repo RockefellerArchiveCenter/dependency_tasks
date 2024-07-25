@@ -18,9 +18,15 @@ Parameters:
   AsanaAccessToken:
     Type: String
     Description: Access token for Asana.
-  GithubAccessToken:
+  GithubAppId:
     Type: String
-    Description: Access token for Github.
+    Description: ID for Github app.
+  GithubAppInstallationId:
+    Type: String
+    Description: Installation ID for Github app.
+  GithubAppPrivateKey:
+    Type: String
+    Description: Private Key for Github app.
 
 Mappings:
   Asana:
@@ -95,16 +101,38 @@ Resources:
       Type: String
       Value: !FindInMap [Asana, SectionId, !Ref ApplicationEnvironment]
 
-  GithubAccessTokenParam:
+  GithubAppId:
     Type: AWS::SSM::Parameter
     Properties: 
-      Description: Token for Github client.
-      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_ACCESS_TOKEN
+      Description: ID for Github App.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_ID
       Tags: 
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !Ref AsanaAccessToken
+      Value: !Ref GithubAppId
+  
+  GithubAppInstallationId:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Installation ID for Github App.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_INSTALLATION_ID
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !Ref GithubAppInstallationId
+
+  GithubAppPrivateKey:
+    Type: AWS::SSM::Parameter
+    Properties: 
+      Description: Private Key for Github App.
+      Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_PRIVATE_KEY
+      Tags: 
+        Environment: !Ref ApplicationEnvironment
+        Application: !Ref ApplicationName
+      Type: String
+      Value: !Ref GithubAppPrivateKey
 
   GithubOrgNameParam:
     Type: AWS::SSM::Parameter

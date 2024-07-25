@@ -115,13 +115,17 @@ def test_main(mock_dependency_prs, mock_asana_tasks,
     project_id = 123456789
     section_id = 987654321
     task_gid = 1234
-    github_access_token = "1234abcdefg"
+    github_app_id = 1234567
+    github_app_installation_id = 7654321
+    github_app_private_key = "1234abcdefg"
     asana_access_token = "98765fedcba"
     mock_get_config.return_value = {
         'GITHUB_ORG_NAME': org_name,
         'ASANA_PROJECT_ID': project_id,
         'ASANA_SECTION_ID': section_id,
-        'GITHUB_ACCESS_TOKEN': github_access_token,
+        'GITHUB_APP_ID': github_app_id,
+        'GITHUB_APP_INSTALLATION_ID': github_app_installation_id,
+        'GITHUB_APP_PRIVATE_KEY': github_app_private_key,
         'ASANA_ACCESS_TOKEN': asana_access_token
     }
     pr_list = [MockPR("foo"), MockPR("bar")]
