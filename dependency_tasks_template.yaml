@@ -42,7 +42,7 @@ Mappings:
       prod: "RockefellerArchiveCenter"
 
 Resources:
-  DigitizationTasksFunctionRole:
+  DependencyTasksFunctionRole:
     Type: AWS::IAM::Role
     Properties: 
       AssumeRolePolicyDocument:
@@ -101,7 +101,7 @@ Resources:
       Type: String
       Value: !FindInMap [Asana, SectionId, !Ref ApplicationEnvironment]
 
-  GithubAppId:
+  GithubAppIdParam:
     Type: AWS::SSM::Parameter
     Properties: 
       Description: ID for Github App.
@@ -112,7 +112,7 @@ Resources:
       Type: String
       Value: !Ref GithubAppId
   
-  GithubAppInstallationId:
+  GithubAppInstallationIdParam:
     Type: AWS::SSM::Parameter
     Properties: 
       Description: Installation ID for Github App.
@@ -123,7 +123,7 @@ Resources:
       Type: String
       Value: !Ref GithubAppInstallationId
 
-  GithubAppPrivateKey:
+  GithubAppPrivateKeyParam:
     Type: AWS::SSM::Parameter
     Properties: 
       Description: Private Key for Github App.
@@ -174,7 +174,7 @@ Resources:
     Type: AWS::Events::Rule
     Properties:
       Description: "Runs on the first Monday of each month"
-      Name: first_monday
+      Name: first_monday_of_month
       ScheduleExpression: "cron(0 2 ? * 2#1 *)"
       State: "ENABLED"
       Targets: 
