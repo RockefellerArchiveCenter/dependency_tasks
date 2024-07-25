@@ -1,30 +1,31 @@
+dist: bionic
 language: python
 python:
-  - "3.9"
-services:
-  - docker
+  - "3.11"
+cache: pip
 env:
   global:
-    - TIMESTAMP: $(date '+%Y%m%d%H%M%S')
-cache:
-  directories:
-    - $HOME/.cache/pip
-    - $HOME/.cache/pre-commit
-before_install:
-  - pip install awscli
-  - export PATH=$PATH:$HOME/.local/bin
-install:
+    - LAMBDA_NAME: dependency_tasks
+
+before_script:
   - pip install tox
-script:
-  - tox
+
+script: tox
+
 before_deploy:
+  - pip install awscli
   - if [ ! -d deploy_scripts ]; then git clone https://github.com/RockefellerArchiveCenter/deploy_scripts.git; fi
-  - docker build -t ${DOCKER_REPO} .
-  - bash deploy_scripts/containers/push_image_to_ecr.sh ${DOCKER_REPO}
+  - sudo deploy_scripts/make_zip_lambda.sh ${LAMBDA_NAME} src/create_dependency_tasks.py
+
 deploy:
-  provider: script
-  script: bash deploy_scripts/containers/deploy_image_lambda.sh
-  on:
-    branch: base
+  - provider: script
+    script: >-
+      bash deploy_scripts/upload_file_to_s3.sh ${LAMBDA_NAME}.zip rac-prod-lambda &&
+      bash deploy_scripts/deploy_package_lambda.sh ${LAMBDA_NAME} &&
+      bash deploy_scripts/upload_file_to_s3.sh ${LAMBDA_NAME}_template.yaml rac-prod-cloudformation-apps/${LAMBDA_NAME}
+    skip_cleanup: true
+    on:
+      branch: base
+
 notifications:
   email: false
