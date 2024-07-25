@@ -61,8 +61,8 @@ def main(event=None, context=None):
     full_config_path = f"/{environ.get('ENV')}/{environ.get('APP_CONFIG_PATH')}"
     config = get_config(full_config_path)
     auth = Auth.AppAuth(
-        config.get("GITHUB_APP_ID"),
-        config.get("GITHUB_APP_PRIVATE_KEY")).get_installation_auth(config.get("GITHUB_APP_INSTALLATION_ID"))
+        int(config.get("GITHUB_APP_ID")),
+        config.get("GITHUB_APP_PRIVATE_KEY")).get_installation_auth(int(config.get("GITHUB_APP_INSTALLATION_ID")))
     gh_client = Github(auth=auth)
     asana_client = AsanaClient(config.get("ASANA_ACCESS_TOKEN"))
     repo_list = gh_client.get_organization(
