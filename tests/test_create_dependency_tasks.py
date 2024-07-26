@@ -100,7 +100,6 @@ def test_subtask_data():
         'data': {
             'completed': False,
             'name': subtask_name,
-            'parent': parent_gid
         }
     }
 
