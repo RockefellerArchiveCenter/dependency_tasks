@@ -76,7 +76,7 @@ def main(event=None, context=None):
                     "deploy development branch with updates",
                     "deploy production branch with updates"]:
                 asana_client.tasks.create_subtask_for_task(
-                    subtask_data(subtask_name, task), {})
+                    subtask_data(subtask_name, task), task['gid'], {})
             task_count += 1
     print(
         "{} {} created".format(
