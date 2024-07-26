@@ -31,11 +31,11 @@ Parameters:
 Mappings:
   Asana:
     ProjectId:
-      dev: 1206971441441570
-      prod: 1206971441441570
+      dev: 1200689146072873
+      prod: 1200689146072873
     SectionId:
-      dev: 1206971441441575
-      prod: 1206971441441575
+      dev: 1200689146072874
+      prod: 1200689146072874
   Github:
     OrgName:
       dev: "RockefellerArchiveCenter"
