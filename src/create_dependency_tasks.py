@@ -121,7 +121,6 @@ def subtask_data(subtask_name, parent):
         "data": {
             "completed": False,
             "name": subtask_name,
-            "parent": parent["gid"]
         }
     }
 
