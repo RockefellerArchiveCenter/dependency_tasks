@@ -44,7 +44,7 @@ Mappings:
 Resources:
   DependencyTasksFunctionRole:
     Type: AWS::IAM::Role
-    Properties: 
+    Properties:
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -63,17 +63,17 @@ Resources:
             Version: '2012-10-17'
             Statement:
               - Effect: Allow
-                Action: 
+                Action:
                   - 'ssm:GetParametersByPath*'
                   - 'ssm:PutParameter'
                 Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ApplicationEnvironment}/${ApplicationName}*'
 
   AsanaAccessTokenParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Token for Asana client.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_ACCESS_TOKEN
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -81,10 +81,10 @@ Resources:
 
   AsanaProjectIdParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Asana project ID in which new tasks should be created.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_PROJECT_ID
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -92,10 +92,10 @@ Resources:
 
   AsanaSectionIdParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Asana section ID under which new tasks should be created.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/ASANA_SECTION_ID
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -103,21 +103,21 @@ Resources:
 
   GithubAppIdParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: ID for Github App.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_ID
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
       Value: !Ref GithubAppId
-  
+
   GithubAppInstallationIdParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Installation ID for Github App.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_INSTALLATION_ID
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -125,10 +125,10 @@ Resources:
 
   GithubAppPrivateKeyParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Private Key for Github App.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_APP_PRIVATE_KEY
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -136,10 +136,10 @@ Resources:
 
   GithubOrgNameParam:
     Type: AWS::SSM::Parameter
-    Properties: 
+    Properties:
       Description: Organization name for Github organizational account.
       Name: !Sub /${ApplicationEnvironment}/${ApplicationName}/GITHUB_ORG_NAME
-      Tags: 
+      Tags:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
@@ -155,7 +155,7 @@ Resources:
       Handler: create_dependency_tasks.main
       Role: !GetAtt DependencyTasksFunctionRole.Arn
       Runtime: python3.11
-      Timeout: 270
+      Timeout: 330
       Environment:
         Variables:
           ENV:
@@ -164,7 +164,7 @@ Resources:
             Ref: ApplicationName
       Architectures:
         - x86_64
-      Tags: 
+      Tags:
         - Key: Environment
           Value: !Ref ApplicationEnvironment
         - Key: Application
@@ -177,11 +177,11 @@ Resources:
       Name: first_monday_of_month
       ScheduleExpression: "cron(0 2 ? * 2#1 *)"
       State: "ENABLED"
-      Targets: 
+      Targets:
         - Arn: !GetAtt DependencyTasksFunction.Arn
           Id: "DependencyTasks"
 
-  DependencyTasksEventRulePermission: 
+  DependencyTasksEventRulePermission:
     Type: AWS::Lambda::Permission
     Properties:
       FunctionName: !Ref DependencyTasksFunction
