@@ -4,13 +4,13 @@
 #
 #    pip-compile
 #
-asana==5.0.8
+asana==5.0.10
     # via -r requirements.in
-certifi==2024.7.4
+certifi==2024.8.30
     # via
     #   asana
     #   requests
-cffi==1.16.0
+cffi==1.17.0
     # via
     #   cryptography
     #   pynacl
@@ -20,13 +20,13 @@ cryptography==43.0.0
     # via pyjwt
 deprecated==1.2.14
     # via pygithub
-idna==3.7
+idna==3.8
     # via requests
 pycparser==2.22
     # via cffi
-pygithub==2.3.0
+pygithub==2.4.0
     # via -r requirements.in
-pyjwt[crypto]==2.8.0
+pyjwt[crypto]==2.9.0
     # via pygithub
 pynacl==1.5.0
     # via pygithub
