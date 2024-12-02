@@ -34,8 +34,8 @@ jobs:
       - name: Install requirements
         run: |
             mkdir package
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt --target ./package
+            python -m pip install ----platform manylinux2014_x86_64 --upgrade pip
+            pip install --platform manylinux2014_x86_64 -r requirements.txt --target ./package
             cd package
             zip -r ../${LAMBDA_NAME}.zip .
             cd ..
