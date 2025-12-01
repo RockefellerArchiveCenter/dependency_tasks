@@ -19,10 +19,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5.0.0
+        uses: actions/checkout@v6.0.0
 
       - name: Configure Python
-        uses: actions/setup-python@v6.0.0
+        uses: actions/setup-python@v6.1.0
         with:
           python-version: '3.11'
 
@@ -45,7 +45,7 @@ jobs:
           cp ${{ env.LAMBDA_HANDLER_CODE }} ${{ env.BASENAME }}
           zip ${{ env.LAMBDA_NAME }}.zip ${{ env.BASENAME }}
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v5.0.0
+        uses: aws-actions/configure-aws-credentials@v5.1.1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
