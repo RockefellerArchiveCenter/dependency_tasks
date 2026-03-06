@@ -1,6 +1,6 @@
 asana==5.2.2
     # via -r requirements.in
-certifi==2026.1.4
+certifi==2026.2.25
     # via
     #   asana
     #   requests
@@ -10,7 +10,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.4
     # via requests
-cryptography==46.0.4
+cryptography==46.0.5
     # via pyjwt
 idna==3.11
     # via requests
