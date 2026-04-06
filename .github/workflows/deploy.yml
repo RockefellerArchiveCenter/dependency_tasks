@@ -27,7 +27,7 @@ jobs:
           python-version: '3.11'
 
       - name: Export secrets to environment variables
-        uses: oNaiPs/secrets-to-env-action@v1.7
+        uses: oNaiPs/secrets-to-env-action@v1.8
         with:
           secrets: ${{ toJSON(secrets) }}
 
