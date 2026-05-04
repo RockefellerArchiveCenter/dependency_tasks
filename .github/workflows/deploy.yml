@@ -45,7 +45,7 @@ jobs:
           cp ${{ env.LAMBDA_HANDLER_CODE }} ${{ env.BASENAME }}
           zip ${{ env.LAMBDA_NAME }}.zip ${{ env.BASENAME }}
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v6.0.0
+        uses: aws-actions/configure-aws-credentials@v6.1.0
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
