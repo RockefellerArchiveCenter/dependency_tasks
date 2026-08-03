@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.2](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.1...v1.0.2) (2026-08-03)
+
+
+### Bug Fixes
+
+* **deps:** Scheduled dependency updates ([de799f4](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/de799f4d4047805b1f81f86b4ddb29ee6a37c874))
+* **deps:** Scheduled dependency updates ([de799f4](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/de799f4d4047805b1f81f86b4ddb29ee6a37c874))
+* **deps:** Scheduled dependency updates ([ad3a703](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/ad3a703c62c4bf4fc06122583856040e97b157c8))
+* **deps:** Scheduled dependency updates ([ad3a703](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/ad3a703c62c4bf4fc06122583856040e97b157c8))
+* **deps:** Scheduled dependency updates ([2f15094](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/2f150944e35a7ea43435ea28130193a3538be05e))
+
 ## [1.0.1](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.0...v1.0.1) (2026-07-06)
 
 
