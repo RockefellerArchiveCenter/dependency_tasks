@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.2...v1.0.3) (2026-09-08)
+
+
+### Bug Fixes
+
+* **deps:** Scheduled dependency updates ([2cabe65](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/2cabe6595772c48e1437e85bf149c61c302dd670))
+
 ## [1.0.2](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.1...v1.0.2) (2026-08-03)
 
 
