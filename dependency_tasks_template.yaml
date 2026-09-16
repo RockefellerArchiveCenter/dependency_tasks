@@ -142,7 +142,7 @@ Resources:
       FunctionName: !Ref ApplicationName
       Handler: create_dependency_tasks.main
       Role: !GetAtt DependencyTasksFunctionRole.Arn
-      Runtime: python3.11
+      Runtime: python3.12
       Timeout: 330
       Environment:
         Variables:
