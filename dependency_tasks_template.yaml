@@ -15,18 +15,6 @@ Parameters:
     Type: String
     Description: Name of the application to be deployed.
     Default: dependency_tasks
-  AsanaAccessToken:
-    Type: String
-    Description: Access token for Asana.
-  GithubAppId:
-    Type: String
-    Description: ID for Github app.
-  GithubAppInstallationId:
-    Type: String
-    Description: Installation ID for Github app.
-  GithubAppPrivateKey:
-    Type: String
-    Description: Private Key for Github app.
 
 Mappings:
   Asana:
@@ -66,7 +54,7 @@ Resources:
                 Action:
                   - 'ssm:GetParametersByPath*'
                   - 'ssm:PutParameter'
-                Resource: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ApplicationEnvironment}/${ApplicationName}*'
+                Resource: !Sub 'arn:${AWS::Partition}:ssm:${AWS::Region}:${AWS::AccountId}:parameter/${ApplicationEnvironment}/${ApplicationName}*'
 
   AsanaAccessTokenParam:
     Type: AWS::SSM::Parameter
@@ -77,8 +65,8 @@ Resources:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !Ref AsanaAccessToken
-
+      Value: !Sub '{{resolve:secretsmanager:${ApplicationEnvironment}/dependency-tasks-deploy:SecretString:AsanaAccessToken}}'
+  
   AsanaProjectIdParam:
     Type: AWS::SSM::Parameter
     Properties:
@@ -110,7 +98,7 @@ Resources:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !Ref GithubAppId
+      Value: !Sub '{{resolve:secretsmanager:${ApplicationEnvironment}/dependency-tasks-deploy:SecretString:GithubAppId}}'
 
   GithubAppInstallationIdParam:
     Type: AWS::SSM::Parameter
@@ -121,7 +109,7 @@ Resources:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !Ref GithubAppInstallationId
+      Value: !Sub '{{resolve:secretsmanager:${ApplicationEnvironment}/dependency-tasks-deploy:SecretString:GithubAppInstallationId}}'
 
   GithubAppPrivateKeyParam:
     Type: AWS::SSM::Parameter
@@ -132,7 +120,7 @@ Resources:
         Environment: !Ref ApplicationEnvironment
         Application: !Ref ApplicationName
       Type: String
-      Value: !Ref GithubAppPrivateKey
+      Value: !Sub '{{resolve:secretsmanager:${ApplicationEnvironment}/dependency-tasks-deploy:SecretString:GithubAppPrivateKey}}'
 
   GithubOrgNameParam:
     Type: AWS::SSM::Parameter
