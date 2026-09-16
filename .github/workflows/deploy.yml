@@ -23,7 +23,7 @@ jobs:
       - name: Configure Python
         uses: actions/setup-python@v7.0.0
         with:
-          python-version: '3.11'
+          python-version: '3.12'
 
       - name: Export secrets to environment variables
         uses: oNaiPs/secrets-to-env-action@v1.8
