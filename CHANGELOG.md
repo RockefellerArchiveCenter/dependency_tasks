@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.6](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.5...v1.0.6) (2026-10-21)
+
+
+### Bug Fixes
+
+* update pip and deps ([d01706c](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/d01706cf310bd8c4975174f3e30bffbe607d8f1f))
+* update pip and deps ([d01706c](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/d01706cf310bd8c4975174f3e30bffbe607d8f1f))
+* update pip and deps ([1a4ceb5](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/1a4ceb5666bfd339ff5a7dbcdb863122b06a1dc0))
+* update pip and deps ([1a4ceb5](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/1a4ceb5666bfd339ff5a7dbcdb863122b06a1dc0))
+* update pip and deps ([a5e7dc3](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/a5e7dc307c4bf27ae79efb94254a8ee8636c9569))
+
 ## [1.0.5](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.4...v1.0.5) (2026-10-05)
 
 
