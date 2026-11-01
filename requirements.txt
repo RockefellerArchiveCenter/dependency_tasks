@@ -1,6 +1,6 @@
-asana==5.4.0
+asana==5.5.1
     # via -r requirements.in
-certifi==2026.10.19
+certifi==2026.10.23
     # via
     #   asana
     #   requests
@@ -14,7 +14,7 @@ cryptography==50.0.2
     # via pyjwt
 idna==3.20
     # via requests
-pycparser==3.11
+pycparser==3.12
     # via cffi
 pygithub==2.10.0
     # via -r requirements.in
@@ -22,7 +22,7 @@ pyjwt[crypto]==2.15.1
     # via pygithub
 pynacl==1.6.2
     # via pygithub
-python-dateutil==2.9.0.post0
+python-dateutil==3.0.0
     # via asana
 requests==2.34.2
     # via pygithub
@@ -32,6 +32,8 @@ six==1.17.0
     #   python-dateutil
 typing-extensions==4.16.0
     # via pygithub
+tzdata==2026.6
+    # via python-dateutil
 urllib3==2.8.0
     # via
     #   asana
