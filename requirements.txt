@@ -22,8 +22,10 @@ pyjwt[crypto]==2.15.1
     # via pygithub
 pynacl==1.6.2
     # via pygithub
-python-dateutil==3.0.0
-    # via asana
+python-dateutil==2.9.0.post0
+    # via
+    #   -r requirements.in
+    #   asana
 requests==2.34.2
     # via pygithub
 six==1.17.0
@@ -32,8 +34,6 @@ six==1.17.0
     #   python-dateutil
 typing-extensions==4.16.0
     # via pygithub
-tzdata==2026.6
-    # via python-dateutil
 urllib3==2.8.0
     # via
     #   asana
