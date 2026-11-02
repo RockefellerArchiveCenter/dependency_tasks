@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.7](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.6...v1.0.7) (2026-11-02)
+
+
+### Bug Fixes
+
+* **deps:** Scheduled dependency updates ([8dc6216](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/8dc62164060d88a7ff33529abf31caaaab80fd73))
+* **deps:** Scheduled dependency updates ([8dc6216](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/8dc62164060d88a7ff33529abf31caaaab80fd73))
+* **deps:** Scheduled dependency updates ([d4057e1](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/d4057e11eb27bfbccb78376947177254f3a524e8))
+* **deps:** Scheduled dependency updates ([d4057e1](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/d4057e11eb27bfbccb78376947177254f3a524e8))
+* **deps:** Scheduled dependency updates ([21fd668](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/21fd668c9884ad6c3ab783909a72dac1be3e32cf))
+* pin python-dateutil ([dc26125](https://github.com/RockefellerArchiveCenter/dependency_tasks/commit/dc26125a5d8d815dfbce3980da6b16f0759e68a0))
+
 ## [1.0.6](https://github.com/RockefellerArchiveCenter/dependency_tasks/compare/v1.0.5...v1.0.6) (2026-10-21)
 
 
